@@ -1,3 +1,6 @@
+/**
+ * https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md#exportnameddeclaration
+ */
 const babelParser = require('@babel/parser')
 const fs = require('fs')
 const path = require('path')
