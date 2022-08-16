@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      class ListNode {
+        constructor(val) {
+          this.val = val;
+          this.next = null;
+        }
+      }
+
+      class LinkedList {
+        constructor() {
+          this.head = null;
+          this.length = 0
+        }
+
+        append(val) {
+          const node = new ListNode(val);
+
+          if (!this.head) {
+            this.head = node;
+          } else {
+            let pointer = this.head;
+            while (pointer.next) {
+              pointer = pointer.next;
+            }
+            pointer.next = node;
+          }
+
+          this.length++
+        }
+
+        toString() {
+            let str = ''
+            let pointer = this.head
+
+            if(!pointer) {
+                console.log('empty');
+                return
+            }
+
+            do {
+                str += (pointer.val + '=>')
+                pointer = pointer.next
+            } while (pointer.next);
+            str += pointer.val
+            console.log(str)
+        }
+      }
+    </script>
+    <script>
+      /**
+       * Definition for singly-linked list.
+       * function ListNode(val, next) {
+       *     this.val = (val===undefined ? 0 : val)
+       *     this.next = (next===undefined ? null : next)
+       * }
+       */
+      /**
+       * @param {ListNode} head
+       * @param {number} val
+       * @return {ListNode}
+       */
+      
+      // case 1: 迭代
+      var removeElements = function (head, val) {
+          let sentry = {
+              next: head
+          }
+
+          let  pointer = sentry
+
+          while(pointer.next) {
+              if (pointer.next.val === val) {
+                pointer.next = pointer.next.next
+              } else {
+                pointer = pointer.next
+              }
+          }
+
+          return sentry.next
+      };
+
+      // case 2  递归
+      var removeElements = function (head, val) {
+          if (head == null) {
+            return head
+          }
+
+          head.next = removeElements(head.next, val)
+
+          return head.val === val ? head.next : head
+      };
+
+      // var list = new LinkedList()
+      // list.append(6)
+      // list.append(2)
+      // list.append(6)
+      // list.append(3)
+      // list.append(4)
+      // list.append(5)
+      // list.append(6)
+
+
+      // console.log(list.head = removeElements(list.head, 6));
+
+      // list.toString()
+
+    </script>
+  </head>
+  <body></body>
+</html>

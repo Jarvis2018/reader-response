@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      /**
+       * @param {number} capacity
+       */
+       var LRUCache = function (capacity) {
+          this.capacity = capacity
+          this.cache = new Map()
+      };
+
+      /**
+       * @param {number} key
+       * @return {number}
+       */
+      LRUCache.prototype.get = function (key) {
+          if (this.cache.has(key)) {
+            //  使其用到的值在时间的最新位置
+            const val = this.cache.get(key)
+            this.cache.delete(key)
+            this.cache.set(key, val)
+            return val
+          }
+          return -1
+      };
+
+      /**
+       * @param {number} key
+       * @param {number} value
+       * @return {void}
+       */
+      LRUCache.prototype.put = function (key, value) {
+        // 如果存在就先删除，之后再添加，使其保持在时间最新的位置
+        if(this.cache.has(key)) {
+            this.cache.delete(key)
+        }
+        if(this.cache.size >= this.capacity) {
+            this.cache.delete(this.cache.keys().next().value)
+        }
+        this.cache.set(key, value)
+
+      };
+
+      /**
+       * Your LRUCache object will be instantiated and called as such:
+       * var obj = new LRUCache(capacity)
+       * var param_1 = obj.get(key)
+       * obj.put(key,value)
+       */
+    </script>
+  </head>
+  <body></body>
+</html>

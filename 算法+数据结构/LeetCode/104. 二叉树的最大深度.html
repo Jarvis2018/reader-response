@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>104. 二叉树的最大深度</title>
+    <script>
+      /**
+       * Definition for a binary tree node.
+       * function TreeNode(val, left, right) {
+       *     this.val = (val===undefined ? 0 : val)
+       *     this.left = (left===undefined ? null : left)
+       *     this.right = (right===undefined ? null : right)
+       * }
+       */
+      /**
+       * @param {TreeNode} root
+       * @return {number}
+       */
+      // case: 递归，深度优先 DFS
+      // 主要思路就是：逐级“下探”，找到叶子节点（没有子节点）并 return 出去，做为上一层用到的值，（类似：一去一回）这样当“一回”的时候就会逐级 + 1，直到最开始的调用
+      var maxDepth = function (root) {
+        if (root === null) {
+          return 0;
+        }
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+      };
+
+      // case 2: 迭代，广度优先 BFS
+      // 主要思路就是：查找这棵树到底有多少层。不断的拓展当前层，每拓展一次就 + 1。
+      // 直到当前层的下一层不存在为止，否则就把当前层的节点存起来，再继续查找这些存起来的节点是否有下一层。
+      var maxDepth = function (root) {
+        if (root === null) return 0
+
+        const layer = [root]
+        let depth = 0
+        while (layer.length) {
+            let currentLayerNodeSize = layer.length
+            while(currentLayerNodeSize){
+                // 这里不能用 pop,否则下次循环 pop 的值是上次 push 进去 **下** 个节点。
+                // shift 可以每次获取上次 push 的值。
+                const node = layer.shift()
+                if (node.left !== null) {
+                    layer.push(node.left)
+                }
+                if (node.right !== null) {
+                    layer.push(node.right)
+                }
+
+                currentLayerNodeSize--
+            }
+
+            depth++
+        }
+
+        return depth
+      }
+
+      let tree = {
+          val: 1,
+          left: {
+              val: 2,
+              left: {
+                  val: 4,
+                  left: null,
+                  right: null
+              },
+              right: null
+          },
+          right: {
+              val: 3,
+              left: null,
+              right: {
+                  val: 5,
+                  left: null,
+                  right: null
+              }
+          },
+      }
+
+
+      console.log(maxDepth(tree));
+    //   [1,2,3,4,null,null,5]
+    //   1
+    //   /     \
+    //   2      3
+    //          / \
+    //          null 5
+    //  / \ 
+    //  4 null
+    </script>
+  </head>
+  <body></body>
+</html>

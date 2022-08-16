@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      /**
+       * 链表
+       * 1=>2=>3
+       */
+      class ListNode {
+        constructor(val) {
+          this.val = val;
+          this.next = null;
+        }
+      }
+
+      class LinkedList {
+        constructor() {
+          this.head = null;
+          this.length = 0
+        }
+
+        append(val) {
+          const node = new ListNode(val);
+
+          if (!this.head) {
+            this.head = node;
+          } else {
+            let pointer = this.head;
+            while (pointer.next) {
+              pointer = pointer.next;
+            }
+            pointer.next = node;
+          }
+
+          this.length++
+        }
+
+        toString() {
+            let str = ''
+            let pointer = this.head
+
+            if(!pointer) {
+                console.log('empty');
+                return
+            }
+
+            while (pointer.next) {
+                str += (pointer.val + '=>')
+                pointer = pointer.next
+            }
+            str += pointer.val
+            console.log(str)
+        }
+      }
+
+      const list = new LinkedList();
+      list.append(1);
+      list.append(2);
+      list.append(3);
+
+      console.log(list);
+
+      list.toString()
+    </script>
+  </head>
+
+  <body></body>
+</html>

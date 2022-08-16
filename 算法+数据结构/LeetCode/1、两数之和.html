@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      /**
+       * @param {number[]} nums
+       * @param {number} target
+       * @return {number[]}
+       */
+
+      // case 1 两层循环
+      var twoSum = function (nums, target) {
+        for (let i = 0, len = nums.length; i < len; i++) {
+          for (let j = i + 1; j < len; j++) {
+            if (nums[i] + nums[j] === target) {
+              return [i, j];
+            }
+          }
+        }
+      };
+
+      // case  2 两个循环
+      var twoSum = function (nums, target) {
+        let obj = {};
+
+        for (let i = 0; i < nums.length; i++) {
+          obj[nums[i]] = i;
+        }
+
+        for (let i = 0; i < nums.length; i++) {
+          let other = target - nums[i];
+          if (other in obj && obj[other] !== i) {
+            return [i, obj[other]];
+          }
+        }
+      };
+
+      // case  3 一次循环
+      // 在数组里寻找两数之和等于给定的 target ，既然是两数之和，无非就是根据 x 寻找 另一半target -  x 所以我们遍历数组后，先根据当前循环的x计算下target - x,然后判断x是否在obj里，不在的话把target - x存到obj里。
+      // 这里有个绕的地方就是：我们为啥把target - x放到 obj里，因为我们找的就是另一半，既然是两数之和，假设数组里存在这样的两个数，那当我们下次循环得到的num（也是这次循环的 x）很有可能就是上次循环记录到target - x，也就是说这次的x就是上个循环的target - x。所以我们用本次的x在obj里寻找是有过记录。
+      // 总结：提前记录要寻找到另一半target - x,所以我们也就不需要两次循环（不用盲目的寻找了，我已经知道我要找的人的特征了），因为已经提前知道另一半的下标了。
+      var twoSum = function (nums, target) {
+        let obj = {};
+
+        for (let i = 0; i < nums.length; i++) {
+          let num = nums[i];
+          let other = target - num;
+          if (num in obj) {
+            return [i, obj[num]];
+          } else {
+            obj[other] = i;
+          }
+        }
+      };
+      console.log(twoSum([1, 2, 5, 7], 7));
+    </script>
+  </head>
+  <body></body>
+</html>

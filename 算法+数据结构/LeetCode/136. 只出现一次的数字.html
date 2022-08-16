@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>136. 只出现一次的数字</title>
+    <script>
+      /**
+       * @param {number[]} nums
+       * @return {number}
+       */
+
+      // 主要根据（异或：相同的都是 0，不同的都是 1）：
+      // 1、相同的两个数异或运算结果都是 0
+      // 2、和 0 做异或运算的结果都是原来的数
+      // 3、根据加法交换律和结合律（主要考虑数组里顺序问题）：a+b+a = b+a+a
+      // 根据以上三个规律：a+b+a = b+a+a = b+0 = b
+      var singleNumber = function (nums) {
+        let res = 0;
+        nums.forEach((item) => {
+          res ^= item;
+        });
+        return res;
+      };
+    </script>
+  </head>
+  <body></body>
+</html>

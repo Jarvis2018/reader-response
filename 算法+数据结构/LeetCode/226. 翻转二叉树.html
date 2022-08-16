@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>226. 翻转二叉树</title>
+  <script>
+    /**
+     * Definition for a binary tree node.
+     * function TreeNode(val, left, right) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.left = (left===undefined ? null : left)
+     *     this.right = (right===undefined ? null : right)
+     * }
+     */
+    /**
+     * @param {TreeNode} root
+     * @return {TreeNode}
+     */
+    //  case 1: 递归
+    var invertTree = function (root) {
+      if (root === null) {
+        return root
+      }
+      // let tmp = root.left
+      // root.left = root.right
+      // root.right = tmp
+      // invertTree(root.left)
+      // invertTree(root.right)
+      [root.left, root.right] = [invertTree(root.right), invertTree(root.left)]
+
+      return root
+    };
+
+    // case 2: 迭代
+    var invertTree = function (root) {
+      if (root === null) {
+        return null
+      }
+
+      let layer = [root]
+      while (layer.length) {
+        let size = layer.length
+        while(size > 0) {
+          const node = layer.shift()
+          if(node) {
+            [node.left, node.right] = [node.right, node.left]
+            layer.push(node.left, node.right)
+          }
+          size--
+        }
+      }
+
+      return root
+    }
+  </script>
+</head>
+
+<body></body>
+
+</html>
